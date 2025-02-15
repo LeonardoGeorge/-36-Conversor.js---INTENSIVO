@@ -1,0 +1,90 @@
+:root {
+    --background: #192b05;
+    --primary: #000000;
+    --foreground: #b8d17f;
+    --secondary: #000000;
+    --secondary-light: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.4rem;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--background);
+    color: var(--primary);
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4rem 2rem;
+}
+
+header img {
+    width: auto;
+    height: 8rem;
+    border: #000000;
+    border-radius: 25px;
+}
+
+main {
+    margin: 3rem;
+}
+
+main section {
+    display: flex;
+    font-weight: bold;
+    background-color: var(--foreground);
+    margin: 2rem auto;
+    padding: 1rem;
+    max-width: 80rem;
+    border: 0;
+    border-radius: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+main section span {
+    display: block;
+    margin-right: 1rem;
+    color: var(--secondary-light);
+    font-size: 5rem;
+
+}
+
+main section input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    color: var(--secondary);
+    font-size: 5rem;
+    font-weight: bold;
+    border: 0;
+    outline: none;
+    text-align: right;
+}
+
+img {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+}
+
+footer {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    
+}

@@ -1,62 +1,90 @@
-let dolar = 5.7277;
+let dolar = 5.7277; // Valor inicial enquanto a API não responde.
 
 let usdInput = document.querySelector("#usd");
 let brlInput = document.querySelector("#brl");
 
+// Buscar a cotação do dólar assim que a página carregar
+document.addEventListener("DOMContentLoaded", () => {
+    fetchExchangeRate();
+});
 
 usdInput.addEventListener("keyup", () => {
-    usdInput.value = formatCurrency(usdInput.value)
-} );
+    convert("usd-to-brl");
+});
 
 brlInput.addEventListener("keyup", () => {
-    brlInput.value = formatCurrency(brlInput.value)
-} );
+    convert("brl-to-usd");
+});
+
+usdInput.addEventListener("blur", () => {
+    usdInput.value = formatCurrency(usdInput);
+});
+
+brlInput.addEventListener("blur", () => {
+    brlInput.value = formatCurrency(brlInput);
+});
 
 usdInput.value = "1000,00";
-conversao("usd-to-brl");
-
+convert("usd-to-brl");
 
 // Funções
 function formatCurrency(value) {
-    // Ajuste de valor...
     let fixedValue = fixValue(value);
     let options = {
         useGrouping: false,
-        minimumFractuinDigits: 2
-    }
-
-    // Formatação;
-    let formatter = new Intl.NumberFormat("pr-BR", options)
-
-    // Return;
+        minimumFractionDigits: 2
+    };
+    let formatter = new Intl.NumberFormat("pt-BR", options);
     return formatter.format(fixedValue);
-
 }
 
-function fixValue (value) {
+function fixValue(value) {
     let fixedValue = value.replace(",", "."); // Ajuste de valor ("," = "." USD);
     let floatValue = parseFloat(fixedValue);
 
-    if (floatValue == NaN) {
-        floatValue = 0
+    if (isNaN(floatValue)) {
+        floatValue = 0;
     }
-    return floatValue
+    return floatValue;
 }
 
 function convert(type) {
     if (type == "usd-to-brl") {
-        // Converção; 
-        // Add valor de R$ Input;
+        let fixedValue = fixValue(usdInput.value);
 
+        let result = fixedValue * dolar;
+        result = result.toFixed(2);
 
-
+        brlInput.value = formatCurrency(result);
     }
 
     if (type == "brl-to-usd") {
-        // Ajuste de valor ("," = "." USD);
-        // Converção; 
-        // Add valor de US$ Input;
+        let fixedValue = fixValue(brlInput.value);
 
+        let result = fixedValue / dolar;
+        result = result.toFixed(2);
+
+        usdInput.value = formatCurrency(result);
     }
+}
 
+// Função para buscar a cotação do dólar
+function fetchExchangeRate() {
+    const apiUrl = "https://api.exchangerate.host/latest?base=USD&symbols=BRL";
+
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Erro ao buscar a cotação");
+            }
+            return response.json();
+        })
+        .then(data => {
+            dolar = data.rates.BRL; // Atualiza a variável global com o valor da API
+            console.log(`Cotação atual do dólar: ${dolar}`);
+            convert("usd-to-brl"); // Recalcula com a nova cotação
+        })
+        .catch(error => {
+            console.error("Erro ao buscar a cotação do dólar:", error);
+        });
 }

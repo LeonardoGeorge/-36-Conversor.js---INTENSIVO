@@ -1,7 +1,7 @@
 :root {
-    --background: #192b05;
+    --background: #335755;
     --primary: #000000;
-    --foreground: #b8d17f;
+    --foreground: #cfcfcf;
     --secondary: #000000;
     --secondary-light: #000000;
 }
@@ -82,9 +82,10 @@ img {
 }
 
 footer {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     font-size: 18px;
     color: #fff;
+    font-weight: 400;
     
 }
